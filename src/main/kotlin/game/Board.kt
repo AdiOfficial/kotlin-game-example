@@ -10,9 +10,7 @@ import javax.swing.ImageIcon
 import javax.swing.JPanel
 import javax.swing.Timer
 
-
 class Board : JPanel(), ActionListener {
-
     private val boardWidth = 300
     private val boardHeight = 300
     private val dotSize = 10
@@ -39,7 +37,6 @@ class Board : JPanel(), ActionListener {
     private var head: Image? = null
 
     init {
-
         addKeyListener(TAdapter())
         background = Color.black
         isFocusable = true
@@ -50,7 +47,6 @@ class Board : JPanel(), ActionListener {
     }
 
     private fun loadImages() {
-
         val iid = ImageIcon("src/main/resources/dot.png")
         ball = iid.image
 
@@ -62,7 +58,6 @@ class Board : JPanel(), ActionListener {
     }
 
     private fun initGame() {
-
         nOfDots = 3
 
         for (z in 0 until nOfDots) {
@@ -83,9 +78,7 @@ class Board : JPanel(), ActionListener {
     }
 
     private fun doDrawing(g: Graphics) {
-
         if (inGame) {
-
             g.drawImage(apple, appleX, appleY, this)
 
             for (z in 0 until nOfDots) {
@@ -97,15 +90,13 @@ class Board : JPanel(), ActionListener {
             }
 
             Toolkit.getDefaultToolkit().sync()
-
+			
         } else {
-
             gameOver(g)
         }
     }
 
     private fun gameOver(g: Graphics) {
-
         val msg = "Game Over"
         val small = Font("Helvetica", Font.BOLD, 14)
         val fontMetrics = getFontMetrics(small)
@@ -124,70 +115,50 @@ class Board : JPanel(), ActionListener {
     }
 
     private fun checkApple() {
-
         if (x[0] == appleX && y[0] == appleY) {
-
             nOfDots++
             locateApple()
         }
     }
 
     private fun move() {
-
         for (z in nOfDots downTo 1) {
             x[z] = x[z - 1]
             y[z] = y[z - 1]
         }
 
-        if (leftDirection) {
+        if (leftDirection)
             x[0] -= dotSize
-        }
 
-        if (rightDirection) {
+        if (rightDirection)
             x[0] += dotSize
-        }
 
-        if (upDirection) {
+        if (upDirection)
             y[0] -= dotSize
-        }
 
-        if (downDirection) {
+        if (downDirection)
             y[0] += dotSize
-        }
     }
 
     private fun checkCollision() {
-
         for (z in nOfDots downTo 1) {
-
             if (z > 4 && x[0] == x[z] && y[0] == y[z]) {
                 inGame = false
             }
         }
 
-        if (y[0] >= boardHeight) {
+        if (y[0] >= boardHeight ||
+			y[0] < 0 ||
+			x[0] >= boardWidth ||
+			x[0] < 0) {
             inGame = false
-        }
+		}
 
-        if (y[0] < 0) {
-            inGame = false
-        }
-
-        if (x[0] >= boardWidth) {
-            inGame = false
-        }
-
-        if (x[0] < 0) {
-            inGame = false
-        }
-
-        if (!inGame) {
+        if (!inGame)
             timer!!.stop()
-        }
     }
 
     private fun locateApple() {
-
         var r = (Math.random() * randPos).toInt()
         appleX = r * dotSize
 
@@ -196,9 +167,7 @@ class Board : JPanel(), ActionListener {
     }
 
     override fun actionPerformed(e: ActionEvent) {
-
         if (inGame) {
-
             checkApple()
             checkCollision()
             move()
@@ -208,9 +177,7 @@ class Board : JPanel(), ActionListener {
     }
 
     private inner class TAdapter : KeyAdapter() {
-
         override fun keyPressed(e: KeyEvent?) {
-
             val key = e!!.keyCode
 
             if (key == KeyEvent.VK_LEFT && !rightDirection) {

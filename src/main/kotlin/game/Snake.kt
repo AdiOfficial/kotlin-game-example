@@ -4,14 +4,11 @@ import java.awt.EventQueue
 import javax.swing.JFrame
 
 class Snake : JFrame() {
-
     init {
-
         initUI()
     }
 
     private fun initUI() {
-
         add(Board())
 
         title = "Snake"
@@ -24,7 +21,6 @@ class Snake : JFrame() {
     }
 
     companion object {
-
         @JvmStatic
         fun main(args: Array<String>) {
 
