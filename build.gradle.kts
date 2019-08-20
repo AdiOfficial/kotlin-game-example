@@ -4,6 +4,8 @@
  * This generated file contains a sample Kotlin application project to get you started.
  */
 
+
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.gradle.jvm.tasks.Jar
 
 plugins {
@@ -21,6 +23,8 @@ repositories {
 }
 
 dependencies {
+	compile(kotlin("stdlib-jdk8"))
+
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
 
@@ -45,4 +49,8 @@ tasks.withType<Jar> {
 	}
 
 	from(configurations.runtime.get().map { if (it.isDirectory) it else zipTree(it)})
+}
+
+tasks.withType<KotlinCompile> {
+  kotlinOptions.jvmTarget = "1.8"
 }
